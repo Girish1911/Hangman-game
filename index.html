@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epic Animated Hangman Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="content-wrapper">
+        <div class="particles" id="particles"></div>
+        
+        <!-- MENU PAGE -->
+        <div class="menu-page" id="menuPage">
+           <h1 class="menu-title">
+            <span class="icon-badge">
+<svg class="icon-gallows" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <path d="M443.76,230.18a12.78,12.78,0,0,0-2.16-25.38,12.8,12.8,0,0,0,0-25.6h-6.4V76.8H409.6V179.2h-6.4a12.8,12.8,0,1,0,0,25.6A12.78,12.78,0,0,0,401,230.18C385.9,243,364.8,266.94,364.8,300.8a57.6,57.6,0,0,0,115.2,0C480,266.94,458.9,243,443.76,230.18ZM422.4,332.8a32,32,0,0,1-32-32c0-27.32,21.14-46.76,32-55,10.91,8.15,32,27.44,32,55A32,32,0,0,1,422.4,332.8Z"
+        fill="#525559" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polygon points="32 0 32 76.8 76.8 76.8 76.8 416 153.6 416 153.6 76.8 486.4 76.8 486.4 0 32 0"
+        fill="#ffb85a" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <rect x="32" y="51.2" width="454.4" height="25.6"
+        fill="#757889" opacity="0.08" stroke="black" stroke-width="6"/>
+  <rect x="-28.8" y="233.6" width="339.2" height="25.6" transform="translate(387.2 105.6) rotate(90)"
+        fill="#757889" opacity="0.08" stroke="black" stroke-width="6"/>
+  <path d="M199.68,444.16l-51.2-38.4a12.81,12.81,0,0,0-7.68-2.56H89.6a12.81,12.81,0,0,0-7.68,2.56l-51.2,38.4A12.82,12.82,0,0,0,25.6,454.4v44.8A12.8,12.8,0,0,0,38.4,512H192a12.8,12.8,0,0,0,12.8-12.8V454.4A12.82,12.82,0,0,0,199.68,444.16Z"
+        fill="#757889" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M153.6,409.6V512H192a12.8,12.8,0,0,0,12.8-12.8V448Z"
+        fill="#ffffff" opacity="0.08" stroke="black" stroke-width="6"/>
+  <path d="M76.8,448V409.6L25.6,448v51.2A12.8,12.8,0,0,0,38.4,512H76.8Z"
+        fill="#d3934f" opacity="0.2" stroke="black" stroke-width="6"/>
+  <polygon points="195.29 76.8 153.6 118.49 153.6 227.1 303.91 76.8 195.29 76.8"
+        fill="#d3934f" stroke="black" stroke-width="6"/>
+</svg>
+
+
+    <!-- SVG path data from Dryicons here -->
+  </svg>
+  </span>
+       Hangman Game
+</h1>
+            
+            <div class="menu-container">
+                <div class="menu-controls">
+                    <div class="dropdown" id="categoryDropdown">
+                        <button class="dropdown-btn" onclick="toggleDropdown('categoryDropdown')">
+                            <span id="selectedCategory">🐾 Animals</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item" onclick="selectCategory('Animals', '🐾')">🐾 Animals</div>
+                            <div class="dropdown-item" onclick="selectCategory('Countries', '🌍')">🌍 Countries</div>
+                            <div class="dropdown-item" onclick="selectCategory('Food', '🍕')">🍕 Food</div>
+                            <div class="dropdown-item" onclick="selectCategory('Movies', '🎬')">🎬 Movies</div>
+                            <div class="dropdown-item" onclick="selectCategory('Sports', '⚽')">⚽ Sports</div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown" id="difficultyDropdown">
+                        <button class="dropdown-btn" onclick="toggleDropdown('difficultyDropdown')">
+                            <span id="selectedDifficulty">🤔 Medium</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item" onclick="selectDifficulty('Easy', '😊')">😊 Easy (3-5 letters)</div>
+                            <div class="dropdown-item" onclick="selectDifficulty('Medium', '🤔')">🤔 Medium (6-8 letters)</div>
+                            <div class="dropdown-item" onclick="selectDifficulty('Hard', '😈')">😈 Hard (9+ letters)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="start-game-btn" onclick="startGame()">🚀 Start Game</button>
+            </div>
+        </div>
+
+        <!-- GAME PAGE -->
+        <div class="game-page hidden" id="gamePage">
+            <div class="game-container">
+                <div class="game-header">
+                    <button class="back-btn" onclick="backToMenu()">← Back to Menu</button>
+                   <h2 class="game-title">
+<svg class="icon-gallows1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <path d="M443.76,230.18a12.78,12.78,0,0,0-2.16-25.38,12.8,12.8,0,0,0,0-25.6h-6.4V76.8H409.6V179.2h-6.4a12.8,12.8,0,1,0,0,25.6A12.78,12.78,0,0,0,401,230.18C385.9,243,364.8,266.94,364.8,300.8a57.6,57.6,0,0,0,115.2,0C480,266.94,458.9,243,443.76,230.18ZM422.4,332.8a32,32,0,0,1-32-32c0-27.32,21.14-46.76,32-55,10.91,8.15,32,27.44,32,55A32,32,0,0,1,422.4,332.8Z"
+        fill="#525559" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <polygon points="32 0 32 76.8 76.8 76.8 76.8 416 153.6 416 153.6 76.8 486.4 76.8 486.4 0 32 0"
+        fill="#ffb85a" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <rect x="32" y="51.2" width="454.4" height="25.6"
+        fill="#757889" opacity="0.08" stroke="black" stroke-width="6"/>
+  <rect x="-28.8" y="233.6" width="339.2" height="25.6" transform="translate(387.2 105.6) rotate(90)"
+        fill="#757889" opacity="0.08" stroke="black" stroke-width="6"/>
+  <path d="M199.68,444.16l-51.2-38.4a12.81,12.81,0,0,0-7.68-2.56H89.6a12.81,12.81,0,0,0-7.68,2.56l-51.2,38.4A12.82,12.82,0,0,0,25.6,454.4v44.8A12.8,12.8,0,0,0,38.4,512H192a12.8,12.8,0,0,0,12.8-12.8V454.4A12.82,12.82,0,0,0,199.68,444.16Z"
+        fill="#757889" stroke="black" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M153.6,409.6V512H192a12.8,12.8,0,0,0,12.8-12.8V448Z"
+        fill="#ffffff" opacity="0.08" stroke="black" stroke-width="6"/>
+  <path d="M76.8,448V409.6L25.6,448v51.2A12.8,12.8,0,0,0,38.4,512H76.8Z"
+        fill="#d3934f" opacity="0.2" stroke="black" stroke-width="6"/>
+  <polygon points="195.29 76.8 153.6 118.49 153.6 227.1 303.91 76.8 195.29 76.8"
+        fill="#d3934f" stroke="black" stroke-width="6"/>
+</svg>
+
+    <!-- SVG path data from Dryicons here -->
+  </svg>
+  </span>
+  Hangman Game
+</h2>
+                    <div class="difficulty-info">
+                        <span id="currentCategory">Animals</span> - <span id="currentDifficulty">Medium</span>
+                    </div>
+                </div>
+
+                <div class="game-info">
+                    <div class="wrong-guesses">Wrong Guesses: <span id="wrongCount">0</span>/6</div>
+                    <div id="gameMessage" class="game-message" style="display: none;"></div>
+                    <button class="new-game-btn" onclick="newGame()"> New Word</button>
+                </div>
+
+                <div class="game-content">
+                    <div class="hangman-section">
+                        <div class="hangman-display">
+                         <svg class="hangman-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gallows (no diagonal hinge) -->
+  <rect x="40" y="60" width="14" height="260" fill="#b2853f" rx="6"/>
+  <rect x="40" y="60" width="180" height="14" fill="#b2853f" rx="6"/>
+  <rect x="18" y="310" width="14" height="60" fill="#b2853f" transform="rotate(30 25 340)" rx="6"/>
+  <rect x="64" y="310" width="14" height="60" fill="#b2853f" transform="rotate(-30 71 340)" rx="6"/>
+  
+  <!-- Vertical rope -->
+  <line x1="210" y1="74" x2="210" y2="146"
+        stroke="#b2853f" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Stickman -->
+  <!-- Head filled black, slightly left of body -->
+  <circle id="head" class="hangman-part" cx="204" cy="132" r="20" 
+        stroke="#000" stroke-width="6" fill="#000"/>
+  
+  <!-- Body stays centered at rope -->
+  <path id="body" class="hangman-part" d="M210 152 C205 185 218 215 210 245"
+        stroke="#000" stroke-width="6" fill="none"/>
+  <path id="leftArm" class="hangman-part" d="M210 170 C185 195 178 215 172 230"
+        stroke="#000" stroke-width="6" fill="none"/>
+  <path id="rightArm" class="hangman-part" d="M210 170 C235 195 242 215 248 230"
+        stroke="#000" stroke-width="6" fill="none"/>
+  <path id="leftLeg" class="hangman-part" d="M210 245 C192 275 185 300 180 320"
+        stroke="#000" stroke-width="6" fill="none"/>
+  <path id="rightLeg" class="hangman-part" d="M210 245 C228 275 235 300 240 320"
+        stroke="#000" stroke-width="6" fill="none"/>
+  
+  <!-- Rope loop ON TOP of neck -->
+  <path d="M196 152 Q210 160 224 152" 
+        stroke="#b2853f" stroke-width="6" fill="none" stroke-linecap="round"/>
+</svg>
+
+                        </div>
+                    </div>
+
+                    <div class="game-section">
+                        <div class="word-display" id="wordDisplay"></div>
+                        
+                        <div class="virtual-keyboard" id="virtualKeyboard"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
