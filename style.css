@@ -21,6 +21,12 @@ body {
   overflow: auto;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  display: none;
+}
+
+
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
